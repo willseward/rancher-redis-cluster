@@ -1,6 +1,6 @@
 FROM redis
 
-MAINTAINER Zeyu Ye <Shuliyey@gmail.com>
+MAINTAINER Jérémie Bordier <jeremie.bordier@gmail.com>
 
 ARG GIDDYUP_VERSION=0.17.1
 
