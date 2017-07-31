@@ -13,7 +13,7 @@ sed -i -E "s/^ *# *bind +.*$/bind 0.0.0.0/g" /usr/local/etc/redis/sentinel.conf
 sed -i -E "s/^ *dir +.*$/dir .\//g" /usr/local/etc/redis/sentinel.conf
 sed -i -E "\$s/^ *# *sentinel +announce-ip +.*$/sentinel announce-ip ${my_ip}/" /usr/local/etc/redis/sentinel.conf
 sed -i -E "s/^ *sentinel +monitor +([A-z0-9._-]+) +[0-9.]+ +([0-9]+) +([0-9]+).*$/sentinel monitor \1 ${master_ip} \2 \3/g" /usr/local/etc/redis/sentinel.conf
-sed -i -E 's/^ *sentinel client-reconfig-script ([A-z0-9._-]+) .*$/sentinel client-reconfig-script \1 \/update-master-externalservice.sh/' /usr/local/etc/redis/sentinel.conf
+sed -i -E "s/^ *#? *sentinel +client-reconfig-script +([A-z0-9._-]+).*$/sentinel client-reconfig-script \1 \/update-master-externalservice.sh/" /usr/local/etc/redis/sentinel.conf
 
 if [ -z "${SENTINEL_DOWN_AFTER_MILLISECONDS}" ]; then
 	sed -i -E 's/^ *sentinel down-after-milliseconds ([A-z0-9._-]+) .*$/sentinel down-after-milliseconds \1 ${SENTINEL_DOWN_AFTER_MILLISECONDS}/' /usr/local/etc/redis/sentinel.conf
