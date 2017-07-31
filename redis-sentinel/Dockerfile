@@ -5,7 +5,7 @@ MAINTAINER Jérémie Bordier <jeremie.bordier@gmail.com>
 ARG GIDDYUP_VERSION=0.17.1
 
 RUN apt-get update \
-  && apt-get install -y curl openssl ca-certificates wget \
+  && apt-get install -y curl openssl ca-certificates wget jq \
   && update-ca-certificates \
   && mkdir -p /usr/local/etc/redis \
   && cd /usr/local/etc/redis \
@@ -19,6 +19,7 @@ RUN apt-get update \
 RUN rm -rf ~/* \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+ADD update-master-externalservice.sh /
 ADD docker-entrypoint.sh /
 
 WORKDIR /data
