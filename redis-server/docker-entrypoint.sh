@@ -25,7 +25,7 @@ then
   echo "I am the leader"
 else
   port=`echo -n $(grep -E "^ *port +.*$" /usr/local/etc/redis/redis.conf | sed -E "s/^ *port +(.*)$/\1/g")`
-  sed -i -E "s/^ *# +slaveof +.*$/slaveof $master_ip $port/g" /usr/local/etc/redis/redis.conf
+  sed -i -E "s/^.*slaveof +.*$/slaveof $master_ip $port/g" /usr/local/etc/redis/redis.conf
 fi
 
 exec docker-entrypoint.sh "$@"
