@@ -14,7 +14,7 @@ sed -i -E "s/^ *dir +.*$/dir .\//g" /usr/local/etc/redis/sentinel.conf
 sed -i -E "\$s/^ *# *sentinel +announce-ip +.*$/sentinel announce-ip ${my_ip}/" /usr/local/etc/redis/sentinel.conf
 sed -i -E "s/^ *sentinel +monitor +([A-z0-9._-]+) +[0-9.]+ +([0-9]+) +([0-9]+).*$/sentinel monitor \1 ${master_ip} \2 \3/g" /usr/local/etc/redis/sentinel.conf
 
-if [ -z "${CATTLE_ACCESS_KEY}" ]; then
+if [ -n "${CATTLE_ACCESS_KEY}" ]; then
 	sed -i -E "s/^[ #]*sentinel +client-reconfig-script +([A-z0-9._-]+).*$/sentinel client-reconfig-script \1 \/update-master-externalservice.sh/" /usr/local/etc/redis/sentinel.conf
 else
 	echo "*** WARNING: redis-master external service management disabled, add labels io.rancher.container.create_agent=true and io.rancher.container.agent.role=environment on redis-sentinel containers to enable it."
