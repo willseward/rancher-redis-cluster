@@ -20,11 +20,11 @@ else
 	echo "*** WARNING: redis-master external service management disabled, add labels io.rancher.container.create_agent=true and io.rancher.container.agent.role=environment on redis-sentinel containers to enable it."
 fi
 
-if [ -z "${SENTINEL_DOWN_AFTER_MILLISECONDS}" ]; then
+if [ -n "${SENTINEL_DOWN_AFTER_MILLISECONDS}" ]; then
 	sed -i -E "\$s/^[ #]*sentinel down-after-milliseconds ([A-z0-9._-]+) .*$/sentinel down-after-milliseconds \1 ${SENTINEL_DOWN_AFTER_MILLISECONDS}/" /usr/local/etc/redis/sentinel.conf
 fi
 
-if [ -z "${SENTINEL_FAILOVER_TIMEOUT}" ]; then
+if [ -n "${SENTINEL_FAILOVER_TIMEOUT}" ]; then
 	sed -i -E "\$s/^[ #]*sentinel failover-timeout ([A-z0-9._-]+) .*$/sentinel failover-timeout \1 ${SENTINEL_FAILOVER_TIMEOUT}/" /usr/local/etc/redis/sentinel.conf
 fi
 
