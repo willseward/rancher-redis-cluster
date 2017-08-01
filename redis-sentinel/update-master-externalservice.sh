@@ -2,7 +2,7 @@
 
 REDIS_MASTER_UUID=$(curl -s http://rancher-metadata/latest/self/stack/services/redis-master/uuid)
 
-if [ $REDIS_MASTER_UUID = 'Not found' ]; then
+if [ "${REDIS_MASTER_UUID}" = 'Not found' ]; then
 	# Should create master.
 	STACK_UUID=$(curl -s http://rancher-metadata/latest/self/stack/uuid)
 	STACK_ID=$(curl "${CATTLE_URL}/stacks?uuid=${STACK_UUID}" -s -u "${CATTLE_ACCESS_KEY}:${CATTLE_SECRET_KEY}" | jq -r '.data[0].id')
