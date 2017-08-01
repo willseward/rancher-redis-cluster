@@ -2,14 +2,9 @@
 
 REDIS_MASTER_NAME=mymaster
 
-function leader_ip {
-  echo -n $(curl -s http://rancher-metadata/latest/stacks/$1/services/$2/containers/0/primary_ip)
-}
-
 giddyup service wait scale --timeout 120
-stack_name=`echo -n $(curl -s http://rancher-metadata/latest/self/stack/name)`
-my_ip=`echo -n $(curl -s http://rancher-metadata/latest/self/container/primary_ip)`
-master_ip=$(leader_ip $stack_name redis-server)
+my_ip=$(giddyup ip myip)
+master_ip=$(giddyup leader get)
 
 # Check if there are sentinel nodes up and running, because current redis cluster master may be different than rancher elected master
 if redis-cli -h redis-sentinel -p 26379 ping; then

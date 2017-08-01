@@ -6,13 +6,14 @@ function leader_ip {
 
 giddyup service wait scale --timeout 120
 stack_name=`echo -n $(curl -s http://rancher-metadata/latest/self/stack/name)`
-my_ip=`echo -n $(curl -s http://rancher-metadata/latest/self/container/primary_ip)`
+my_ip=$(giddyup ip myip)
 redis_master_ip=$(leader_ip $stack_name redis-server)
 sentinel_master_ip=$(giddyup leader get)
 
 sed -i -E "s/^ *# *bind +.*$/bind 0.0.0.0/g" /usr/local/etc/redis/sentinel.conf
 sed -i -E "s/^ *dir +.*$/dir .\//g" /usr/local/etc/redis/sentinel.conf
-sed -i -E "\$s/^[ #]*sentinel +announce-ip +.*$/sentinel announce-ip ${my_ip}/" /usr/local/etc/redis/sentinel.conf
+sed -i -E "s/^[ #]*sentinel +announce-ip +.*$/sentinel announce-ip ${my_ip}/" /usr/local/etc/redis/sentinel.conf
+sed -i -E "s/^[ #]*sentinel +announce-port +.*$/sentinel announce-port 26379/" /usr/local/etc/redis/sentinel.conf
 sed -i -E "s/^[ #]*sentinel +monitor +([A-z0-9._-]+) +[0-9.]+ +([0-9]+) +([0-9]+).*$/sentinel monitor \1 ${redis_master_ip} \2 \3/g" /usr/local/etc/redis/sentinel.conf
 
 if [ -n "${CATTLE_ACCESS_KEY}" ]; then
