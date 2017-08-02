@@ -12,7 +12,10 @@ if redis-cli -h redis-sentinel -p 26379 ping; then
 fi
 
 sed -i -E "s/^ *bind +.*$/bind 0.0.0.0/g" /usr/local/etc/redis/redis.conf
-sed -i -E "s/^ *appendonly +.*$/appendonly yes/g" /usr/local/etc/redis/redis.conf
+
+if [ "${REDIS_APPENDONLY}" = "yes"]; then
+	sed -i -E "s/^ *appendonly +.*$/appendonly yes/g" /usr/local/etc/redis/redis.conf
+fi
 
 if [ "$my_ip" == "$master_ip" ]
 then
