@@ -2,7 +2,7 @@ FROM redis
 
 MAINTAINER Jérémie Bordier <jeremie.bordier@gmail.com>
 
-ARG GIDDYUP_VERSION=0.17.1
+ARG GIDDYUP_VERSION=0.18.0
 
 RUN apt-get update \
   && apt-get install -y curl openssl ca-certificates wget \
@@ -11,8 +11,6 @@ RUN apt-get update \
   && cd /usr/local/etc/redis \
   && wget http://download.redis.io/redis-stable/redis.conf \
   && chown redis:redis /usr/local/etc/redis/redis.conf \
-  && ((grep -E "^ *net.core.somaxconn *= *.*$" /etc/sysctl.conf && sed -i -E "s/^ *net.core.somaxconn *= *.*$/net.core.somaxconn=511/g" /etc/sysctl.conf) || echo "net.core.somaxconn=511" >> /etc/sysctl.conf) \
-  && ((grep -E "^ *vm.overcommit_memory *= *.*$" /etc/sysctl.conf && sed -i -E "s/^ *vm.overcommit_memory *= *.*$/vm.overcommit_memory=1/g" /etc/sysctl.conf) || echo "vm.overcommit_memory=1" >> /etc/sysctl.conf) \
   && wget https://github.com/rancher/giddyup/releases/download/v${GIDDYUP_VERSION}/giddyup -P /usr/local/bin \
   && chmod +x /usr/local/bin/giddyup
 
