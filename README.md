@@ -6,6 +6,8 @@ The redis-server image (ahfeel/rancher-redis-cluster-node on Docker hub) is a si
 
 The redis-sentinel image (ahfeel/rancher-redis-cluster-sentinel on Docker hub) starts Redis Sentinel nodes that will automatically find the Redis instances, monitor them and most importantly, create/update automatically a "Rancher External Service" with the current IP of the Redis Master node. This allows to automatically target your traffic to the Redis Master Node without any additional software proxy.
 
+*Warning: The Redis Instances are actually running in a Master/Slave mode, not a Multi Master Redis Cluster*
+
 ![Rancher Redis Cluster Screenshot](/screen.png?raw=true "Rancher Redis Cluster Screenshot")
 
 ## Optional environment variables:
