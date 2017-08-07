@@ -1,3 +1,0 @@
-host_label=
-server_instances_num=2
-sentinel_instances_num=2
