@@ -13,7 +13,7 @@ fi
 
 sed -i -E "s/^ *bind +.*$/bind 0.0.0.0/g" /usr/local/etc/redis/redis.conf
 
-if [ "${REDIS_APPENDONLY}" = "yes"]; then
+if [ "${REDIS_APPENDONLY}" = "yes" ]; then
 	sed -i -E "s/^ *appendonly +.*$/appendonly yes/g" /usr/local/etc/redis/redis.conf
 fi
 
