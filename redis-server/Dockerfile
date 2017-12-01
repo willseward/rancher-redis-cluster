@@ -2,7 +2,7 @@ FROM redis
 
 MAINTAINER Jérémie Bordier <jeremie.bordier@gmail.com>
 
-ARG GIDDYUP_VERSION=0.18.0
+ARG GIDDYUP_VERSION=0.19.0
 
 RUN apt-get update \
   && apt-get install -y curl openssl ca-certificates wget \
