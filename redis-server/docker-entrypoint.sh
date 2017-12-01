@@ -17,6 +17,10 @@ if [ "${REDIS_APPENDONLY}" = "yes" ]; then
 	sed -i -E "s/^ *appendonly +.*$/appendonly yes/g" /usr/local/etc/redis/redis.conf
 fi
 
+if [ -n "${REDIS_TIMEOUT}" ]; then
+	sed -i -E "s/^[ #]*timeout .*$/timeout ${REDIS_TIMEOUT}/" /usr/local/etc/redis/redis.conf
+fi
+
 if [ "$my_ip" == "$master_ip" ]
 then
   sed -i -E "s/^ *slaveof/# slaveof/g" /usr/local/etc/redis/redis.conf

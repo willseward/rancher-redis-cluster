@@ -14,6 +14,8 @@ The redis-sentinel image (ahfeel/rancher-redis-cluster-sentinel on Docker hub) s
 
 ### Redis-Server
 
+`REDIS_TIMEOUT=3600`
+(0 by default)
 `REDIS_APPENDONLY=yes`
 (no by default)
 
