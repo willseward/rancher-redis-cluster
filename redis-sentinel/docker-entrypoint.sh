@@ -7,7 +7,7 @@ function leader_ip {
 giddyup service wait scale --timeout 120
 stack_name=`echo -n $(curl -s http://rancher-metadata/latest/self/stack/name)`
 my_ip=$(giddyup ip myip)
-redis_master_ip=$(leader_ip $stack_name redis-server)
+redis_master_ip=$(leader_ip $stack_name ${REDIS_SERVICE:-"redis-server"})
 sentinel_master_ip=$(giddyup leader get)
 
 sed -i -E "s/^ *# *bind +.*$/bind 0.0.0.0/g" /usr/local/etc/redis/sentinel.conf
