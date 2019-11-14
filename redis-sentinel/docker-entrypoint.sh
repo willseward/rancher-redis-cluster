@@ -1,11 +1,13 @@
 #!/bin/bash
-
 function leader_ip {
   echo -n $(curl -s http://rancher-metadata/latest/stacks/$1/services/$2/containers/0/primary_ip)
 }
 
+echo "hello"
+
 giddyup service wait scale --timeout 120
 stack_name=`echo -n $(curl -s http://rancher-metadata/latest/self/stack/name)`
+echo "I'm currently in $stack_name"
 my_ip=$(giddyup ip myip)
 redis_master_ip=$(leader_ip $stack_name ${REDIS_SERVICE:-"redis-server"})
 sentinel_master_ip=$(giddyup leader get)
@@ -22,6 +24,7 @@ if [ -n "${CATTLE_ACCESS_KEY}" ]; then
 		# We are the sentinel master and the redis-master external service doesn't exists yet.
 		REDIS_MASTER_UUID=$(curl -s http://rancher-metadata/latest/self/stack/services/redis-master/uuid)
 		if [ "${REDIS_MASTER_UUID}" = 'Not found' ]; then
+			echo "No master found. Creating service initially"
 			/update-master-externalservice.sh x x x x x "${redis_master_ip}" 6379
 		fi
 	fi

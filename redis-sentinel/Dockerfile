@@ -1,4 +1,4 @@
-FROM redis:3.2.6
+FROM redis:4.0.9
 
 MAINTAINER Jérémie Bordier <jeremie.bordier@gmail.com>
 
@@ -9,7 +9,7 @@ RUN apt-get update \
   && update-ca-certificates \
   && mkdir -p /usr/local/etc/redis \
   && cd /usr/local/etc/redis \
-  && wget http://download.redis.io/redis-stable/sentinel.conf \
+  && wget https://raw.githubusercontent.com/qzfzz/redis/master/sentinel.conf \
   && chown redis:redis /usr/local/etc/redis/sentinel.conf \
   && wget https://github.com/rancher/giddyup/releases/download/v${GIDDYUP_VERSION}/giddyup -P /usr/local/bin \
   && chmod +x /usr/local/bin/giddyup
@@ -19,6 +19,8 @@ RUN rm -rf ~/* \
 
 ADD update-master-externalservice.sh /
 ADD docker-entrypoint.sh /
+RUN chmod +x /docker-entrypoint.sh
+RUN chmod +x /update-master-externalservice.sh
 
 WORKDIR /data
 

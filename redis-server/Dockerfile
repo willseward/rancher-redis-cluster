@@ -1,4 +1,4 @@
-FROM redis:3.2.6
+FROM redis:4.0.9
 
 MAINTAINER Jérémie Bordier <jeremie.bordier@gmail.com>
 
@@ -9,14 +9,14 @@ RUN apt-get update \
   && update-ca-certificates \
   && mkdir -p /usr/local/etc/redis \
   && cd /usr/local/etc/redis \
-  && wget http://download.redis.io/redis-stable/redis.conf \
-  && chown redis:redis /usr/local/etc/redis/redis.conf \
   && wget https://github.com/rancher/giddyup/releases/download/v${GIDDYUP_VERSION}/giddyup -P /usr/local/bin \
   && chmod +x /usr/local/bin/giddyup
 
 RUN rm -rf ~/* \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+ADD redis.conf /usr/local/etc/redis
+RUN chown redis:redis /usr/local/etc/redis/redis.conf
 ADD docker-entrypoint.sh /
 
 WORKDIR /data
